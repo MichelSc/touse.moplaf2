@@ -288,7 +288,7 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 		public Collection<? extends ITuple> getSubTuples() {
 			List<ITuple> list = JettyFormulationImpl.this.getJetties()
 					.stream()
-					.map(j->new TupleJetty().init(j))
+					.map(j->createTuple(TupleJetty.class, j))
 					.collect(Collectors.toList());
 			return list;
 		}		
@@ -301,7 +301,7 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 			Jetty jetty = this.getDimension1();
 			List<ITuple> list = JettyFormulationImpl.this.getBuckets()
 					.stream()
-					.map(b->new TupleJettyBucket().init(jetty, b))
+					.map(b->createTuple(TupleJettyBucket.class, jetty, b))
 					.collect(Collectors.toList());
 			return list;
 		}
@@ -311,8 +311,8 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 		@Override
 		public Collection<? extends Variable<?>> getVariables() {
 			List<Variable<?>> list = new ArrayList<>();
-			list.add(new VarJettyBucketStart().init(this));
-			list.add(new VarJettyBucketEnd());
+			list.add(createVariable(VarJettyBucketStart.class));
+			list.add(createVariable(VarJettyBucketEnd.class));
 			return list;
 		}	
 	}
