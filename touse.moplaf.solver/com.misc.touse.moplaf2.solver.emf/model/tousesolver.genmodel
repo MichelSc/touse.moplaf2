@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.misc.touse.moplaf2.solver.emf/src" modelPluginID="com.misc.touse.moplaf2.solver.emf"
+    modelName="Tousesolver" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>tousesolver.ecore</foreignModel>
+  <genPackages prefix="ToUseSolver" basePackage="com.misc.touse.moplaf2" disposableProviderFactory="true"
+      ecorePackage="tousesolver.ecore#/">
+    <genClasses ecoreClass="tousesolver.ecore#//Scenario">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tousesolver.ecore#//Scenario/Tag"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tousesolver.ecore#//Scenario/Jetties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tousesolver.ecore#//Scenario/Buckets"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tousesolver.ecore#//Scenario/Formulations"/>
+    </genClasses>
+    <genClasses ecoreClass="tousesolver.ecore#//Jetty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tousesolver.ecore#//Jetty/Tag"/>
+    </genClasses>
+    <genClasses ecoreClass="tousesolver.ecore#//Bucket">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tousesolver.ecore#//Bucket/Tag"/>
+    </genClasses>
+    <genClasses ecoreClass="tousesolver.ecore#//JettyFormulation">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference tousesolver.ecore#//JettyFormulation/Scenario"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tousesolver.ecore#//JettyFormulation/Jetties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tousesolver.ecore#//JettyFormulation/Buckets"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

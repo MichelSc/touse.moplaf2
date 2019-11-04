@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tousesolver -->
+      <package
+            uri="http://www.misc.com/touse/moplaf2/solver/model/0.1"
+            class="com.misc.touse.moplaf2.tousesolver.ToUseSolverPackage"
+            genModel="model/tousesolver.genmodel"/>
+   </extension>
+
+</plugin>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="tousesolver" nsURI="http://www.misc.com/touse/moplaf2/solver/model/0.1"
+    nsPrefix="tuslv">
+  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Jetties" upperBound="-1"
+        eType="#//Jetty" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Buckets" upperBound="-1"
+        eType="#//Bucket" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Formulations" upperBound="-1"
+        eType="#//JettyFormulation" containment="true" eOpposite="#//JettyFormulation/Scenario"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Jetty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bucket">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JettyFormulation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Scenario" lowerBound="1"
+        eType="#//Scenario" eOpposite="#//Scenario/Formulations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Jetties" upperBound="-1"
+        eType="#//Jetty"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Buckets" upperBound="-1"
+        eType="#//Bucket"/>
+  </eClassifiers>
+</ecore:EPackage>
