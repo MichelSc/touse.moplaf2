@@ -4,7 +4,7 @@ package com.misc.touse.moplaf2.tousesolver.impl;
 
 import com.misc.common.moplaf2.solver.Formulation;
 import com.misc.common.moplaf2.solver.IFormulation;
-import com.misc.common.moplaf2.solver.ITuple;
+import com.misc.common.moplaf2.solver.Tuple;
 import com.misc.common.moplaf2.solver.Tuple1;
 import com.misc.common.moplaf2.solver.Tuple2;
 import com.misc.common.moplaf2.solver.Variable;
@@ -49,7 +49,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public class JettyFormulationImpl extends MinimalEObjectImpl.Container implements JettyFormulation, Formulation {
+public class JettyFormulationImpl extends MinimalEObjectImpl.Container implements JettyFormulation {
 	/**
 	 * The cached value of the '{@link #getJetties() <em>Jetties</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -282,38 +282,44 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	//-------------------------------------------------------------------------
 	// formulation content
 	//-------------------------------------------------------------------------
-	class TupleScenario extends Tuple1<Scenario>{
-
+	IFormulation getFormulation() {
+		return new JettyFormulationDecl().init();
+	}
+	
+	class JettyFormulationDecl extends Formulation {
 		@Override
-		public Collection<? extends ITuple> getSubTuples() {
-			List<ITuple> list = JettyFormulationImpl.this.getJetties()
+		public void collectTuples() {
+			super.collectTuples();
+			this.addTuple1(TupleScenario.class, JettyFormulationImpl.this.getScenario());
+		}
+	}
+	
+	class TupleScenario extends Tuple1<JettyFormulationDecl, Scenario>{
+		@Override
+		public void collectTuples() {
+			super.collectTuples();
+			JettyFormulationImpl.this.getJetties()
 					.stream()
-					.map(j->createTuple(TupleJetty.class, j))
-					.collect(Collectors.toList());
-			return list;
+					.forEach(j->this.addTuple1(TupleJetty.class, j));
+		}		
+	}
+	
+	class TupleJetty extends Tuple1<TupleScenario, Jetty>{
+		@Override
+		public void collectTuples() {
+			super.collectTuples();
+			JettyFormulationImpl.this.getBuckets()
+					.stream()
+					.forEach(b->this.addTuple1(TupleJettyBucket.class, b));
 		}		
 	}
 
-	class TupleJetty extends Tuple1<Jetty>{
-
+	class TupleJettyBucket extends Tuple1<TupleJetty, Bucket>{
 		@Override
-		public Collection<? extends ITuple> getSubTuples() {
-			Jetty jetty = this.getDimension1();
-			List<ITuple> list = JettyFormulationImpl.this.getBuckets()
-					.stream()
-					.map(b->createTuple(TupleJettyBucket.class, jetty, b))
-					.collect(Collectors.toList());
-			return list;
-		}
-	}
-
-	class TupleJettyBucket extends Tuple2<Jetty, Bucket>{
-		@Override
-		public Collection<? extends Variable<?>> getVariables() {
-			List<Variable<?>> list = new ArrayList<>();
-			list.add(createVariable(VarJettyBucketStart.class));
-			list.add(createVariable(VarJettyBucketEnd.class));
-			return list;
+		public void collectVars() {
+			super.collectVars();
+			this.addVariable(VarJettyBucketStart.class);
+			this.addVariable(VarJettyBucketEnd.class);
 		}	
 	}
 	
