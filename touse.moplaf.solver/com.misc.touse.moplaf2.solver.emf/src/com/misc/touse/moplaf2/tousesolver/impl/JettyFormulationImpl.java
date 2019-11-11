@@ -345,9 +345,6 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 		public int getType() {
 			return IFormulation.VAR_TYPE_INTEGER;
 		}
-		private void test() {
-			Jetty jetty = this.getTuple().getDimension1();
-		}
 	}
 
 } //JettyFormulationImpl
