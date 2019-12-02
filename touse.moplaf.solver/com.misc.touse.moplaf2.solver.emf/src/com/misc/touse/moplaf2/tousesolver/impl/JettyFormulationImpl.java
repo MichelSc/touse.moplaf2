@@ -2,12 +2,12 @@
  */
 package com.misc.touse.moplaf2.tousesolver.impl;
 
-import com.misc.common.moplaf2.solver.Formulation;
 import com.misc.common.moplaf2.solver.IFormulation;
-import com.misc.common.moplaf2.solver.Tuple;
-import com.misc.common.moplaf2.solver.Tuple1;
-import com.misc.common.moplaf2.solver.Tuple2;
-import com.misc.common.moplaf2.solver.Variable;
+import com.misc.common.moplaf2.solverjava.Formulation;
+import com.misc.common.moplaf2.solverjava.Tuple;
+import com.misc.common.moplaf2.solverjava.Tuple1;
+import com.misc.common.moplaf2.solverjava.Tuple2;
+import com.misc.common.moplaf2.solverjava.Variable;
 import com.misc.touse.moplaf2.tousesolver.Bucket;
 import com.misc.touse.moplaf2.tousesolver.Jetty;
 import com.misc.touse.moplaf2.tousesolver.JettyFormulation;
@@ -296,6 +296,10 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	
 	class TupleScenario extends Tuple1<JettyFormulationDecl, Scenario>{
 		@Override
+		public String getRole() {
+			return "";
+		}
+		@Override
 		public void collectTuples() {
 			super.collectTuples();
 			JettyFormulationImpl.this.getJetties()
@@ -305,6 +309,16 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	}
 	
 	class TupleJetty extends Tuple1<TupleScenario, Jetty>{
+		@Override
+		public String getRole() {
+			return "J";
+		}
+		@Override
+		public String getDimension1AsName() {
+			Jetty jetty = this.getDimension1();
+			return jetty.getTag();
+		}
+
 		@Override
 		public void collectTuples() {
 			super.collectTuples();
@@ -316,6 +330,15 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 
 	class TupleJettyBucket extends Tuple1<TupleJetty, Bucket>{
 		@Override
+		public String getRole() {
+			return "JB";
+		}
+		@Override
+		public String getDimension1AsName() {
+			Bucket bucket = this.getDimension1();
+			return bucket.getTag();
+		}
+		@Override
 		public void collectVars() {
 			super.collectVars();
 			this.addVariable(VarJettyBucketStart.class);
@@ -324,9 +347,8 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	}
 	
 	class VarJettyBucketStart extends Variable<TupleJettyBucket>{
-
 		@Override
-		public String getName() {
+		public String getRole() {
 			return "start";
 		}
 		@Override
@@ -338,7 +360,7 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	class VarJettyBucketEnd extends Variable<TupleJettyBucket>{
 
 		@Override
-		public String getName() {
+		public String getRole() {
 			return "end";
 		}
 		@Override
