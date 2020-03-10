@@ -3,6 +3,7 @@
 package com.misc.touse.moplaf2.tousesolver.impl;
 
 import com.misc.common.moplaf2.solver.IFormulation;
+import com.misc.common.moplaf2.solverjava.Constraint;
 import com.misc.common.moplaf2.solverjava.Formulation;
 import com.misc.common.moplaf2.solverjava.Tuple;
 import com.misc.common.moplaf2.solverjava.Tuple1;
@@ -358,7 +359,6 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 	}
 
 	class VarJettyBucketEnd extends Variable<TupleJettyBucket>{
-
 		@Override
 		public String getRole() {
 			return "end";
@@ -367,6 +367,34 @@ public class JettyFormulationImpl extends MinimalEObjectImpl.Container implement
 		public int getType() {
 			return IFormulation.VAR_TYPE_INTEGER;
 		}
+	class ConsJettyBucketStartOrNextEnd extends Constraint<TupleJettyBucket>{
+		@Override
+		public String getRole() {
+			return "StartOrEnd";
+		}
+		@Override
+		public int getType() {
+			return CONS_TYPE_LINEAR_GEQ;
+		}
+		@Override
+		public double getRightHandSide() {
+			return 1.0;
+		}
+		@Override
+		protected void collectTerms(Constraint<TupleJettyBucket>.Terms terms) {
+			super.collectTerms(terms);
+			TupleJettyBucket this_jb = this.getTuple();
+			TupleJetty this_j = this_jb.getOwner();
+			Bucket bucket = this_jb.getDimension1();
+			Bucket bucket_next = bucket; // .next();
+			TupleJettyBucket next_jb = this_j.getTuple1(TupleJettyBucket.class, bucket_next);
+			
+			VarJettyBucketStart varThisStart = this_jb.getVariable(VarJettyBucketStart.class);
+			VarJettyBucketEnd varNextEnd = next_jb.getVariable(VarJettyBucketEnd.class);
+			this.addTerm(varThisStart, 1.0);
+			this.addTerm(varNextEnd, -1.0);
+		}
+	}
 	}
 
 } //JettyFormulationImpl
